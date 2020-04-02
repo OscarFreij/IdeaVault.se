@@ -1,6 +1,17 @@
 <?php
-$_SESSION['admin'] = true;
-$_SESSION['user'] = "otg020313@gmail.com";
+
+require_once '../private_html/vendor/autoload.php';
+
+require_once '../private_html/config.php';
+
+require_once("../private_html/db.class.php");
+
+
+if(isset($_SESSION['user']))
+{
+    echo($_SESSION['user']);
+}
+
 
 if(isset($_GET['page']))
 {
@@ -42,34 +53,41 @@ else
 <body>
 
 <?php
-
-if ($activePage == "" || strpos($activePage, 'home') !== false)
+if (!isset($_GET['user']))
 {
-    $isActive = array("active","","");
-    // including Navbar!
-    require("../private_html/modules/navbar.php");
-    require("../private_html/pages/home.php");
-}
-elseif (strpos($activePage, 'browseIdeas') !== false)
-{
-    $isActive = array("","active","");
-    // including Navbar!
-    require("../private_html/modules/navbar.php");
-    require("../private_html/pages/browse.php");
-}
-elseif (strpos($activePage, 'postIdea') !== false)
-{
-    $isActive = array("","","active");
-    // including Navbar!
-    require("../private_html/modules/navbar.php");
-    require("../private_html/pages/postIdea.php");
+    if ($activePage == "" || strpos($activePage, 'home') !== false)
+    {
+        $isActive = array("active","","");
+        // including Navbar!
+        require("../private_html/modules/navbar.php");
+        require("../private_html/pages/home.php");
+    }
+    elseif (strpos($activePage, 'browseIdeas') !== false)
+    {
+        $isActive = array("","active","");
+        // including Navbar!
+        require("../private_html/modules/navbar.php");
+        require("../private_html/pages/browse.php");
+    }
+    elseif (strpos($activePage, 'postIdea') !== false)
+    {
+        $isActive = array("","","active");
+        // including Navbar!
+        require("../private_html/modules/navbar.php");
+        require("../private_html/pages/postIdea.php");
+    }
+    else
+    {
+        // including Navbar!
+        require("../private_html/modules/navbar.php");
+        require("../private_html/pages/404.php");
+        //echo("Error: Page dose not exist!");
+    }
 }
 else
 {
-    // including Navbar!
     require("../private_html/modules/navbar.php");
-    require("../private_html/pages/404.php");
-    //echo("Error: Page dose not exist!");
+    require("../private_html/pages/user.php");
 }
 
 /*

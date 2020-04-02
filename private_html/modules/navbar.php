@@ -9,8 +9,20 @@
             <li class="<?=$isActive[2]?> "><a href="?page=postIdea">Post Idea!</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-            <li class=""><a href="#">Login</a></li>
-            <li class=""><a href="#">Sign up</a></li>
+        <?php
+        if (isset($_SESSION['email']))
+        {
+            echo('<li class""><a href=?user='.$_SESSION['nickname'].'>'.$_SESSION['nickname'].'</a></li>');
+            echo('<li class""><a href=logout.php>Logout</a></li>');
+        }
+        else
+        {
+            echo('<li class=""><a href="'.$client->createAuthUrl().'">Login with Google!</a></li>');
+        }
+
+        ?>
+
         </ul>
     </div>
 </nav>
+
