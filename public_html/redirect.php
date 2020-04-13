@@ -29,7 +29,9 @@
     $_SESSION['family_name'] = $google_account_info->family_name;
     $_SESSION['picture'] = $google_account_info->picture;
     $_SESSION['locale'] = $google_account_info->locale;
+    $_SESSION['profile_picture'] = $google_account_info->picture;
 
+    var_dump($google_account_info);
     $dbCon->connectToDB();
     $user_info = $dbCon->getUserInfoEmail($_SESSION['email']);
 
@@ -63,6 +65,10 @@
         $_SESSION['admin_level'] = 0;
         $_SESSION['nickname'] = $tempNick;
     }
+
+    // update picture link
+
+    $status = $dbCon->updateUser("profile_picture", $_SESSION['profile_picture'], $_SESSION['email']);
 
     $dbCon->closeConn();
     header('Location: '.$path); 

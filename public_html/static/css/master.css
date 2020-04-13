@@ -22,3 +22,9 @@
     transform: scale(1.1);
     transition-duration: 0.5s;
 }
+
+body
+{
+    padding-top: 60px;
+    padding-bottom: 10px;
+}

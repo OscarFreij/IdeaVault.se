@@ -55,31 +55,66 @@ class db
         return;
     }
 
-    public function getPosts()
+    public function getPosts($start, $amount)
     {
         Global $conn;
         // PDO // $data = $conn->query("SELECT * FROM details")->fetchAll();
 
         // mySQLI //
-        $sql = "SELECT * FROM `ideas` WHERE is_public = 1";
+        $sql = "SELECT * FROM ideas WHERE is_public = 1 ORDER BY id DESC LIMIT $start,$amount";
+        $data = $conn->query($sql);
+
+        $returnObject = new \stdClass();
+
+        $temp = 0;
+
+        if ($data->num_rows > 0)
+        {
+            // output data of each row
+            while($row = $data->fetch_assoc()) {
+                
+                $subObject = new \stdClass();
+                $subObject->id = $row['id'];
+                $subObject->title = $row['title'];
+                $subObject->author = $this->getOwnerName($row['owner_id']);
+                $subObject->short_description = $row['short_description'];
+                $subObject->followers = $row['followers'];
+                $subObject->creation_dateTime = $row['creation_dateTime'];
+                $subObject->edit_dateTime = $row['edit_dateTime'];
+
+                $returnObject->$temp = $subObject; 
+                $temp++;
+            }
+        }
+        else
+        {
+            echo "0 results";
+        }
+
+        $JsonReturnObject = json_encode($returnObject);
+        
+        return $JsonReturnObject;
+    }
+
+    public function getOwnerName($id)
+    {
+        Global $conn;
+
+        $sql = "SELECT nickname FROM `users` WHERE `id` = $id";
+        
         $data = $conn->query($sql);
 
         if ($data->num_rows > 0) {
             // output data of each row
             while($row = $data->fetch_assoc()) {
-                echo("<div>");
-                foreach ($row as $key => $value) {
-                    
-                    echo("$key : $value");
-                    echo("<br>");
-                    
-                }
-                echo("<div>");
+
+                return $row['nickname'];
             }
-        } else {
-            echo "0 results";
         }
-        return $data;
+        else
+        {
+            return "No User Found";
+        }
     }
 
     public function getPost($id)
@@ -98,6 +133,37 @@ class db
                     echo($value);
                 }
             }
+        }
+
+    }
+
+    public function getPostAmount($isPublic)
+    {
+        Global $conn;
+
+        if ($isPublic)
+        {
+            $sql = "SELECT COUNT(*) FROM `ideas` WHERE 1";
+        }
+        else
+        {
+            $sql = "SELECT COUNT(*) FROM `ideas` WHERE is_public = 1";
+        }
+
+        $data = $conn->query($sql);
+
+        if ($data->num_rows > 0) {
+            // output data of each row
+            while($row = $data->fetch_assoc()) {
+
+                foreach ($row as $key => $value) {
+                    return($value);
+                }
+            }
+        }
+        else
+        {
+            return 0;
         }
 
     }
@@ -154,11 +220,13 @@ class db
         
         $data = $conn->query($sql);
 
+        $nickname = "";
+
         if ($data->num_rows > 0) {
             // output data of each row
             while($row = $data->fetch_assoc()) {
 
-                foreach ($variable as $key => $value) {
+                foreach ($row as $key => $value) {
                     $nickname = "IdeaGenerator".$value;
                 }
                 
@@ -175,6 +243,19 @@ class db
         }
 
         return $nickname;
+    }
+
+    public function updateUser($valueToChange, $newValue, $userToUpdate)
+    {
+        Global $conn;
+
+        $sql = "UPDATE `users` SET `$valueToChange`='$newValue' WHERE `email`='$userToUpdate'";
+
+        if (mysqli_query($conn, $sql)) {
+            return("Successfully updated account!");
+        } else {
+            return("Faild updated account! ERROR: ".mysqli_error($conn));
+        }
     }
 
     public function closeConn()

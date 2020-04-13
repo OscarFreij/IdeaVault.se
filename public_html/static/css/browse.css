@@ -5,3 +5,16 @@
     margin: 5px;
     padding: 5px;
 }
+
+.Ideas > div
+{
+    border: green solid 1px;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 5px;
+}
+
+#bottom
+{
+    display: none;
+}

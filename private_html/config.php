@@ -15,3 +15,9 @@ $client->setClientSecret($clientSecret);
 $client->setRedirectUri($redirectUri);
 $client->addScope("email");
 $client->addScope("profile");
+
+//:: HACKY WAKY :://
+//$client->setApprovalPrompt('force');
+
+$client->prompt="select_account";
+$client->setIncludeGrantedScopes(true);
