@@ -6,13 +6,100 @@
     padding: 5px;
 }
 
-.Ideas > div
+.Ideas > a
 {
-    border: green solid 1px;
+    color: inherit;
+    border: solid 1px #e7e7e7;
     border-radius: 5px;
+    background-color: #F8F8F8;
     margin: 5px;
     padding: 5px;
+    transition-duration: 0.2s;
+    display: grid;
+    grid-template-rows: 2fr 1fr 1fr;
+    grid-template-columns: 4fr 1fr;
+    text-decoration: none;
 }
+
+@media screen and (max-width: 768px) {
+    .Ideas > a {
+      display: block;
+    }
+  }
+
+
+.Ideas > a:hover
+{
+    border-radius: 5px;
+    background-color: #ddd;
+    margin-right: 0px;
+    margin-left: 0px;
+    padding-left: 10px;
+    padding-right: 10px;
+    transition-duration: 0.2s;
+}
+
+.Ideas > a > *.title
+{
+    grid-row-start: 1;
+    grid-row-end: 2;
+    grid-column-start:1;
+    grid-column-end:2;
+    order: 0;
+    font-size: 30px;
+}
+.Ideas > a > *.shortDescription
+{
+    grid-row-start: 2;
+    grid-row-end: 3;
+    grid-column-start:1;
+    grid-column-end:2;
+    order: 1;
+}
+.Ideas > a > *.dateTimeBox
+{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-row-start: 1;
+    grid-row-end: 3;
+    grid-column-start:2;
+    grid-column-end:3;
+    order: 2;
+}
+.Ideas > a > *.creationDateTime
+{
+    grid-row-start: 1;
+    grid-row-end: 3;
+    grid-column-start:1;
+    grid-column-end:2;
+    order: 0;
+}
+.Ideas > a > *.editDateTime
+{
+    grid-row-start: 1;
+    grid-row-end: 3;
+    grid-column-start:1;
+    grid-column-end:2;
+    order: 1;
+}
+.Ideas > a > *.author
+{
+    grid-row-start: 3;
+    grid-row-end: 4;
+    grid-column-start:1;
+    grid-column-end:2;
+    order: 3;
+}
+.Ideas > a > *.followers
+{
+    grid-row-start: 3;
+    grid-row-end: 4;
+    grid-column-start:2;
+    grid-column-end:3;
+    order: 4;
+}
+
 
 #bottom
 {

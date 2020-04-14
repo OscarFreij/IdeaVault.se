@@ -38,43 +38,58 @@ function loadDoc(AmountToLoad) {
             
             jsonPostsObject = JSON.parse(this.responseText)
             
-            //console.log(jsonPostsObject);
+            console.log(jsonPostsObject);
 
             for (let index = 0; index < AmountToLoad; index++) {
             
-                var post = document.createElement("div");
+                var post = document.createElement("a");
                 post.id = jsonPostsObject[index].id; 
+                post.className = "post";
+                post.href = "";
 
-                var title = document.createElement("h2");
+                var title = document.createElement("p");
+                title.className = "title";
                 title.appendChild(document.createTextNode(jsonPostsObject[index].title));
                 
                 var shortDescription = document.createElement("p");
+                shortDescription.className = "shortDescription";
                 shortDescription.appendChild(document.createTextNode(jsonPostsObject[index].short_description))
 
-                var creationDateTime = document.createElement("p");
-                creationDateTime.appendChild(document.createTextNode("Creation date: "+jsonPostsObject[index].creation_dateTime));
 
-                var editDateTime = document.createElement("p");
-                editDateTime.appendChild(document.createTextNode("edit_date: "+jsonPostsObject[index].edit_dateTime));
-                
+                var creationDateTime = document.createElement("p");
+                creationDateTime.className = "creationDateTime";
+                creationDateTime.appendChild(document.createTextNode("Created: "+jsonPostsObject[index].creation_dateTime));
+
+
+                var dateTimeBox = document.createElement("div");
+                dateTimeBox.className = "dateTimeBox";
+
+                dateTimeBox.appendChild(creationDateTime);
+
+                if (jsonPostsObject[index].edit_dateTime != null)
+                {                    
+                    var editDateTime = document.createElement("p");
+                    editDateTime.className = "editDateTime";
+                    editDateTime.appendChild(document.createTextNode("Edited: "+jsonPostsObject[index].edit_dateTime));
+
+                    dateTimeBox.appendChild(editDateTime);
+                }
+
+
                 var author = document.createElement("p");
+                author.className = "author";
                 author.appendChild(document.createTextNode("Author: "+jsonPostsObject[index].author));
                 
                 var followers = document.createElement("p");
-                followers.appendChild(document.createTextNode("Folowers: "+jsonPostsObject[index].followers));
+                followers.className = "followers"
+                followers.appendChild(document.createTextNode("Followers: "+jsonPostsObject[index].followers));
                 
                 
                 // and give it some content 
                 post.appendChild(title);
                 post.appendChild(shortDescription);
                 post.appendChild(author);
-                post.appendChild(creationDateTime);
-                
-                if (jsonPostsObject.edit_dateTime != null)
-                {
-                    post.appendChild(editDateTime);
-                }
-                
+                post.appendChild(dateTimeBox);
                 post.appendChild(followers);
         
                 // add the newly created element and its content into the DOM 

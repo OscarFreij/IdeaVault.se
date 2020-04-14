@@ -74,7 +74,7 @@ else
 <body>
 
 <?php
-if (!isset($_GET['user']))
+if (!isset($_GET['user']) && !isset($_GET['idea']))
 {
     if ($activePage == "" || strpos($activePage, 'home') !== false)
     {
@@ -105,7 +105,7 @@ if (!isset($_GET['user']))
         //echo("Error: Page dose not exist!");
     }
 }
-else
+else if (isset($_GET['user']) && !isset($_GET['idea']))
 {
     if($_GET['user'] == $_SESSION['nickname'])
     {
@@ -116,8 +116,36 @@ else
         $isActive = array("","","","");
     }
 
+    // Chack if user exists
+    /*
+    if($_GET['user'] Exists in)
+    {
+        require("../private_html/modules/navbar.php");
+        require("../private_html/pages/user.php");
+    }
+    else
+    {
+        require("../private_html/modules/navbar.php");
+        require("../private_html/pages/404.php");
+    }
+    */
+
+    // TEMP //
+
+    // TODO: Make this work //
     require("../private_html/modules/navbar.php");
     require("../private_html/pages/user.php");
+}
+else if (!isset($_GET['user']) && isset($_GET['idea']))
+{
+    require("../private_html/modules/navbar.php");
+    require("../private_html/pages/idea.php");
+}
+else
+{
+    echo("WARNING INVALID URL!");
+    require("../private_html/modules/navbar.php");
+    require("../private_html/pages/404.php");
 }
 
 /*
