@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="static/ext/quill/css/quill.core.css">
+    <link rel="stylesheet" href="static/ext/quill/css/quill.snow.css">
+    <link rel="stylesheet" href="static/ext/quill/css/quill.bubble.css">
+
+    <script src="static/ext/quill/js/quill.core.js"></script>
+    <script src="static/ext/quill/js/quill.js"></script>
+    <script src="static/ext/quill/js/quill.min.js"></script>
+
+
+
+    <style>
+        #editor-container
+        {
+            height: 375px;
+        }
+    </style>
+
+</head>
+<body>
+    <div id="editor-container">
+
+    </div>
+    <button onclick="getContent()">Hämta data</button>
+    <input id="input" type="text">
+    <button onclick="setContent()">Skriv data</button>
+    <br>
+    <p id="output"></p>
+    <script src="static/js/view_idea.js"></script>
+    <script src="static/js/edit_idea.js"></script>
+</body>
+</html>

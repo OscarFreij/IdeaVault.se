@@ -6,6 +6,7 @@ require_once '../private_html/config.php';
 
 require_once("../private_html/db.class.php");
 
+$isActive = array("","","","");
 
 if(isset($_GET['page']))
 {
@@ -16,12 +17,12 @@ else
     $activePage = "home";
 }
 
-    $headinclude = (
-    '
-    <script src="static/ext/bootstrap/js/jquery-3.4.1.min.js"></script>
-    <script src="static/ext/bootstrap/js/bootstrap.js"></script>
-    <link rel="stylesheet" href="static/ext/bootstrap/css/bootstrap.css">
-    '
+$headinclude = (
+'
+<script src="static/ext/bootstrap/js/jquery-3.4.1.min.js"></script>
+<script src="static/ext/bootstrap/js/bootstrap.js"></script>
+<link rel="stylesheet" href="static/ext/bootstrap/css/bootstrap.css">
+'
 );
 
 
@@ -43,7 +44,7 @@ else
     <link rel="stylesheet" href="static/css/master.css">
 
     <?php
-    if ($activePage == "" || strpos($activePage, 'home') !== false)
+    if (($activePage == "" || strpos($activePage, 'home') !== false))
     {
 
     }
@@ -54,22 +55,124 @@ else
     }
     elseif (strpos($activePage, 'postIdea') !== false)
     {
+        echo(
+            '
+            <link rel="stylesheet" href="static/ext/quill/css/quill.core.css">
+            <link rel="stylesheet" href="static/ext/quill/css/quill.snow.css">
+            <link rel="stylesheet" href="static/ext/quill/css/quill.bubble.css">
+            <link rel="stylesheet" href="static/css/createIdea.css">
 
+            <script src="static/ext/quill/js/quill.core.js"></script>
+            <script src="static/ext/quill/js/quill.js"></script>
+            <script src="static/ext/quill/js/quill.min.js"></script>
+            <script src="static/js/create_idea.js"></script>
+            '
+        );
+
+    }
+    if (isset($_GET['idea']) || isset($_GET['user']))
+    {
+        echo(
+            '
+            <link rel="stylesheet" href="static/ext/quill/css/quill.core.css">
+            <link rel="stylesheet" href="static/ext/quill/css/quill.snow.css">
+            <link rel="stylesheet" href="static/ext/quill/css/quill.bubble.css">
+
+            <script src="static/ext/quill/js/quill.core.js"></script>
+            <script src="static/ext/quill/js/quill.js"></script>
+            <script src="static/ext/quill/js/quill.min.js"></script>
+            '
+        );
+
+        if (isset($_SESSION['nickname']) && isset($_GET['user']))
+        {
+            if ($_SESSION['nickname'] == $_GET['user'])
+            {
+                if (isset($_GET['edit']))
+                {
+                    if ($_GET['edit'] == "true" || $_GET['edit'] == true)
+                    {
+                        // include user page editing script
+                        echo('<script src="static/js/edit_user.js"></script>');
+                    }
+                    else
+                    {
+                        // ONLY include user viewing script
+                        echo('<script src="static/js/view_user.js"></script>');
+                    }
+                }
+                else
+                {
+                    // ONLY include user viewing script
+                    echo('<script src="static/js/view_user.js"></script>');
+                }
+            }
+            else
+            {
+                // do not include user page editing script
+                // ONLY include user viewing script
+                echo('<script src="static/js/view_user.js"></script>');
+            }
+        }
+        elseif (isset($_GET['user']))
+        {
+            // do not include user page editing script
+            // ONLY include user viewing script
+            echo('<script src="static/js/view_user.js"></script>');
+        }
+
+
+        if (isset($_SESSION['nickname']) && isset($_GET['idea']))
+        {
+
+            echo('<link rel="stylesheet" href="static/css/idea.css">');
+
+            $dbCon = new db;
+            $dbCon->connectToDB();
+
+            $ideaOwner = $dbCon->getOwnerName2($_GET['idea']);
+
+            $dbCon->closeConn();
+            if ($_SESSION['nickname'] == $ideaOwner)
+            {
+                if (isset($_GET['edit']))
+                {
+                    if ($_GET['edit'] == "true" || $_GET['edit'] == true)
+                    {
+                        // include idea page editing script
+                        echo('<script src="static/js/edit_idea.js"></script>');
+                    }
+                    else
+                    {
+                        // ONLY include idea viewing script
+                        echo('<script src="static/js/view_idea.js"></script>');
+                    }
+                }
+                else
+                {
+                    // ONLY include idea viewing script
+                    echo('<script src="static/js/view_idea.js"></script>');
+                }
+            }
+            else
+            {
+                // ONLY include idea viewing script
+                echo('<script src="static/js/view_idea.js"></script>');
+            }
+        }
+        elseif (isset($_GET['post']))
+        {
+            // do not include idea page editing script
+            // ONLY include idea viewing script
+            echo('<script src="static/js/view_idea.js"></script>');
+        }
     }
     else
     {
-        
+
     }
     ?>
     
-    <link rel="stylesheet" href="static/ext/quill/css/quill.core.css">
-    <link rel="stylesheet" href="static/ext/quill/css/quill.snow.css">
-    <link rel="stylesheet" href="static/ext/quill/css/quill.bubble.css">
-
-    <script src="static/ext/quill/js/quill.core.js"></script>
-    <script src="static/ext/quill/js/quill.js"></script>
-    <script src="static/ext/quill/js/quill.min.js"></script>
-
 </head>
 <body>
 

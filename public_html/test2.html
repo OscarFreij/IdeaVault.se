@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="static/ext/bootstrap/js/jquery-3.4.1.min.js"></script>
+    <script src="static/ext/bootstrap/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="static/ext/bootstrap/css/bootstrap.css">
+    
+    <link rel="stylesheet" href="static/ext/quill/css/quill.core.css">
+    <link rel="stylesheet" href="static/ext/quill/css/quill.snow.css">
+    <link rel="stylesheet" href="static/ext/quill/css/quill.bubble.css">
+
+    <script src="static/ext/quill/js/quill.core.js"></script>
+    <script src="static/ext/quill/js/quill.js"></script>
+    <script src="static/ext/quill/js/quill.min.js"></script>
+</head>
+<body>
+    <div id="quill-container">
+
+    </div>
+
+    <script id="1">
+        var quill = new Quill('#quill-container', {
+                modules: {
+                    toolbar: [
+                        [{ header: [1, 2, false] }],
+                        ['bold', 'italic', 'underline'],
+                        ['image', 'code-block']
+                    ]
+                },
+            //scrollingContainer: '#scrolling-container', 
+            placeholder: 'Compose an epic...',
+            readOnly: true,
+            theme: 'bubble'
+        });
+        
+        quill.setContents([
+          { insert: 'Hello ' },
+          { insert: 'World!', attributes: { bold: true } },
+          { insert: '\n' }
+        ]);
+        
+        var el = document.getElementById('1');
+        el.remove(); // Removes the div with the 'div-02' id
+
+    </script>
+
+    <div class="btn-group">
+        <button class="btn btn-primary">|&lt;</button>
+        <button class="btn btn-primary">&lt;</button>
+        <button class="btn btn-primary">1</button>
+        <button class="btn btn-primary">2</button>
+        <button class="btn btn-primary">3</button>
+        <button class="btn btn-primary">&gt;</button>
+        <button class="btn btn-primary">&gt;|</button>
+    </div>
+</body>
+</html>

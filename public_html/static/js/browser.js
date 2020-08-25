@@ -45,15 +45,15 @@ function loadDoc(AmountToLoad) {
                 var post = document.createElement("a");
                 post.id = jsonPostsObject[index].id; 
                 post.className = "post";
-                post.href = "";
+                post.href = ("?idea="+jsonPostsObject[index].id);
 
                 var title = document.createElement("p");
                 title.className = "title";
-                title.appendChild(document.createTextNode(jsonPostsObject[index].title));
+                title.appendChild(document.createTextNode(decodeURIComponent(atob(jsonPostsObject[index].title))));
                 
                 var shortDescription = document.createElement("p");
                 shortDescription.className = "shortDescription";
-                shortDescription.appendChild(document.createTextNode(jsonPostsObject[index].short_description))
+                shortDescription.appendChild(document.createTextNode(decodeURIComponent(atob(jsonPostsObject[index].short_description))));
 
 
                 var creationDateTime = document.createElement("p");

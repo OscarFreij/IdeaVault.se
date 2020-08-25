@@ -4,8 +4,8 @@ require_once '../private_html/vendor/autoload.php';
 $path = ($_SERVER["REQUEST_SCHEME"]."://".$_SERVER['HTTP_HOST']);
 
 // init configuration
-$clientID = '';
-$clientSecret = '';
+$clientID = '553679577116-f0ishd0td7sp4bj1rssbklt6t5q2d412.apps.googleusercontent.com';
+$clientSecret = '-lRUbqPUoE2M7plVEcvvBbBI';
 $redirectUri = $path.'/redirect.php';
   
 // create Client Request to access Google API
